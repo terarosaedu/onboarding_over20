@@ -1,3 +1,41 @@
+// ── 비밀번호 설정 ──
+const ACCESS_CODE = '1001'; // ← 원하는 코드로 변경
+
+function checkPassword() {
+  const input = document.getElementById('pwInput').value.trim();
+  if (input === ACCESS_CODE) {
+    document.getElementById('passwordGate').style.display = 'none';
+    sessionStorage.setItem('tr_access', '1'); // 새로고침해도 유지
+  } else {
+    document.getElementById('pwError').style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+const TEST_ACCESS_CODE = '0123';
+
+function checkTestPassword() {
+  const input = document.getElementById('testPwInput').value.trim();
+  if (input === TEST_ACCESS_CODE) {
+    sessionStorage.setItem('tr_test_pw', '1');
+    document.getElementById('testPasswordGate').style.display = 'none';
+    document.getElementById('testContent').style.display = 'block';
+  } else {
+    document.getElementById('testPwError').style.display = 'block';
+    document.getElementById('testPwInput').value = '';
+    document.getElementById('testPwInput').focus();
+  }
+}
+
+// 이미 인증했으면 게이트 스킵
+if (sessionStorage.getItem('tr_access') === '1') {
+  document.addEventListener('DOMContentLoaded', () => {
+    const gate = document.getElementById('passwordGate');
+    if (gate) gate.style.display = 'none';
+  });
+}
+
 
 // ══════════════════════════════════════════════════
 // ★ Google Sheets – 필기시험 · 만족도 조사 공통 URL ★
@@ -70,11 +108,11 @@ const COURSES = [
       q: '테라로사 위생 중대 법적 사항이 아닌 것은?',
       options: ['소비기한 관리', '한글표시사항 관리', '건강진단결과서 (구 보건증)', '매장 청소 일지 작성'],
       answer: 3,
-      explanation: '중대 법적 사항은 소비기한 관리, 한글표시사항 관리, 건강진단결과서, 이물 혼입 방지 관리 등입니다. 청소 일지는 내부 운영 기준입니다.'
+      explanation: '중대 법적 사항은 소비기한 관리, 한글표시사항 관리, 건강진단결과서, 원산지 표시 관리입니다. 매장 청소 일지는 내부 운영 기준입니다.'
     }]
   },
   {
-    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:30–12:00', instructor: '이지은',
+    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:00–10:30', instructor: '이지은',
     desc: '테라로사 서비스의 기본 원칙과 고객 응대 매너를 배웁니다.',
     quiz: [{
       q: '고객 안내 시 "실례지만", "번거롭겠지만"과 같이 완충하는 표현 방법을 무엇이라 하나요?',
@@ -84,7 +122,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'mot', name: '고객 접점 MOT', day: 'Day 2', time: '13:00–14:00', instructor: '이지은',
+    id: 'mot', name: '고객 접점 MOT', day: 'Day 2', time: '10:30–12:00', instructor: '이지은',
     desc: '고객과의 모든 접점(Moment of Truth)을 5단계로 정리하고 각 단계별 응대 방법을 배웁니다.',
     quiz: [{
       q: '테라로사 서비스 MOT 5단계 중 세 번째 단계는?',
@@ -94,8 +132,8 @@ const COURSES = [
     }]
   },
   {
-    id: 'farm', name: '농장 소개 및 시음', day: 'Day 2', time: '15:00–16:00', instructor: '박세미',
-    desc: '테라로사가 함께하는 주요 농장과 원산지에 대한 이해를 높이고, 실제 커피 시음을 합니다.',
+    id: 'farm', name: '커피 산지 소개', day: 'Day 2', time: '14:00–15:00', instructor: '박세미',
+    desc: '테라로사가 함께하는 주요 커피 산지와 원산지별 특징에 대한 이해를 높입니다.',
     quiz: [{
       q: '에티오피아 커피의 대표적인 특징으로 맞는 것은?',
       options: ['견과류와 초콜릿 향이 강하다', '꽃향기와 과일 향이 특징적이다', '스모키하고 무거운 바디감이 있다', '단맛이 없고 드라이한 편이다'],
@@ -104,7 +142,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'coffee_products', name: '커피 상품 교육', day: 'Day 2', time: '16:00–18:00', instructor: '이지은',
+    id: 'coffee_products', name: '커피 상품 교육', day: 'Day 2', time: '15:30–17:00', instructor: '이지은',
     desc: '원두, 드립백 등 테라로사 커피 상품의 종류, 특징, 기한 및 세일즈 포인트를 배웁니다.',
     quiz: [{
       q: "'킹콩'의 이름은 어떤 의미인가요?",
@@ -114,7 +152,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:30–12:00', instructor: '이지은',
+    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:00–10:30', instructor: '이지은',
     desc: '베이커리, 푸드 상품, 굿즈 라인업 전반을 이해하고 고객에게 소개하는 방법을 배웁니다.',
     quiz: [{
       q: '테라로사에서 판매하는 텀블러를 제조하는 회사 이름은 무엇일까요?',
@@ -124,7 +162,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'pos_kiosk', name: 'POS & KIOSK', day: 'Day 3', time: '13:00–15:30', instructor: '이지은',
+    id: 'pos_kiosk', name: 'POS & KIOSK', day: 'Day 3', time: '10:30–12:00', instructor: '이지은',
     desc: '매장 운영에 필수적인 POS 시스템과 키오스크 사용 방법, 주요 기능을 배웁니다.',
     quiz: [{
       q: '다음 중 테라로사의 POS로 결제가 불가능한 수단은??',
@@ -195,24 +233,39 @@ function tryOpenFinal(id, el) {
 
   showSection(id, el);
 
+  const pwGate = id === 'test' ? document.getElementById('testPasswordGate') : null;
+
   if (done < total) {
     // 이수 미완료 → 잠금
     const pct = Math.round(done / total * 100);
     document.getElementById(id + 'LockedView').style.display = 'block';
     document.getElementById(id + 'Content').style.display = 'none';
     document.getElementById(id + 'CompletePage').style.display = 'none';
+    if (pwGate) pwGate.style.display = 'none';
     document.getElementById(id + 'LockPct').textContent = pct + '%';
   } else if ((id === 'test' && testSubmitted) || (id === 'survey' && surveySubmitted)) {
     // 이미 제출 완료 → 완료 화면 유지
     document.getElementById(id + 'LockedView').style.display = 'none';
     document.getElementById(id + 'Content').style.display = 'none';
     document.getElementById(id + 'CompletePage').style.display = 'block';
+    if (pwGate) pwGate.style.display = 'none';
     if (id === 'survey') document.getElementById('finalWelcomeName').textContent = userName;
   } else {
     // 정상 진입
     document.getElementById(id + 'LockedView').style.display = 'none';
-    document.getElementById(id + 'Content').style.display = 'block';
     document.getElementById(id + 'CompletePage').style.display = 'none';
+
+    if (id === 'test') {
+      if (sessionStorage.getItem('tr_test_pw') === '1') {
+        pwGate.style.display = 'none';
+        document.getElementById('testContent').style.display = 'block';
+      } else {
+        pwGate.style.display = 'block';
+        document.getElementById('testContent').style.display = 'none';
+      }
+    } else {
+      document.getElementById(id + 'Content').style.display = 'block';
+    }
   }
 }
 
