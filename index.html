@@ -124,25 +124,49 @@
     <div class="day-group fade-up d2">
       <div class="day-label d2">Day 2</div>
       <div class="sched-card">
-        <div class="sched-row"><span class="sched-time">09:00–10:30</span><span class="sched-dot theory"></span><span class="sched-content-text">서비스 교육 Basic</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row"><span class="sched-time">09:00–09:15</span><span class="sched-dot theory"></span><span class="sched-content-text">Tea 3종 시음</span></div>
+        <div class="sched-row"><span class="sched-time">09:15–10:30</span><span class="sched-dot theory"></span><span class="sched-content-text">서비스 교육 Basic</span><span class="sched-instructor">이지은</span></div>
         <div class="sched-row"><span class="sched-time">10:30–12:00</span><span class="sched-dot theory"></span><span class="sched-content-text">고객 접점 MOT</span><span class="sched-instructor">이지은</span></div>
         <div class="sched-row lunch"><span class="sched-time">12:00–13:00</span><span class="sched-content-text">중식</span></div>
-        <div class="sched-row"><span class="sched-time">13:00–14:00</span><span class="sched-dot practice"></span><span class="sched-content-text">MOT Role-playing</span><span class="sched-instructor">이지은</span></div>
-        <div class="sched-row"><span class="sched-time">14:00–15:00</span><span class="sched-dot theory"></span><span class="sched-content-text">커피 산지 소개</span><span class="sched-instructor">박세미</span></div>
-        <div class="sched-row"><span class="sched-time">15:00–15:30</span><span class="sched-dot theory"></span><span class="sched-content-text">베이커리 세팅/픽업</span><span class="sched-instructor">박세미</span></div>
-        <div class="sched-row"><span class="sched-time">15:30–17:00</span><span class="sched-dot theory"></span><span class="sched-content-text">커피 상품 교육</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row"><span class="sched-time">13:00–13:30</span><span class="sched-dot theory"></span><span class="sched-content-text">베이커리 세팅/픽업</span><span class="sched-instructor">박세미</span></div>
+        <div class="sched-row"><span class="sched-time">13:30–15:00</span><span class="sched-dot theory"></span><span class="sched-content-text">커피 상품 교육</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row"><span class="sched-time">15:00–16:30</span><span class="sched-dot theory"></span><span class="sched-content-text">푸드/굿즈 상품 교육</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row"><span class="sched-time">16:30–18:00</span><span class="sched-dot practice"></span><span class="sched-content-text">MOT Role-playing</span><span class="sched-instructor">이지은</span></div>
       </div>
     </div>
 
     <div class="day-group fade-up d3">
-      <div class="day-label d3">Day 3</div>
-      <div class="sched-card">
-        <div class="sched-row"><span class="sched-time">09:00–10:30</span><span class="sched-dot theory"></span><span class="sched-content-text">푸드/굿즈 상품 교육</span><span class="sched-instructor">이지은</span></div>
+      <div class="day-head">
+        <div class="day-label d3">Day 3</div>
+        <div class="group-switch" id="groupSwitch">
+          <button class="group-btn" data-group="1" onclick="selectGroup(1)">1조<span class="gb-date" data-group-date="1"></span></button>
+          <button class="group-btn" data-group="2" onclick="selectGroup(2)">2조<span class="gb-date" data-group-date="2"></span></button>
+        </div>
+      </div>
+      <div class="group-note" id="groupNote"></div>
+
+      <!-- 1조 -->
+      <div class="sched-card" id="sched3-1" style="display:none;">
+        <div class="sched-row"><span class="sched-time">09:00–09:15</span><span class="sched-dot theory"></span><span class="sched-content-text">드립백 시음</span></div>
+        <div class="sched-row"><span class="sched-time">09:15–10:30</span><span class="sched-dot practice"></span><span class="sched-content-text">농장 소개 및 시음</span><span class="sched-instructor">박세미</span></div>
         <div class="sched-row"><span class="sched-time">10:30–12:00</span><span class="sched-dot theory"></span><span class="sched-content-text">POS &amp; KIOSK</span><span class="sched-instructor">이지은</span></div>
         <div class="sched-row lunch"><span class="sched-time">12:00–13:00</span><span class="sched-content-text">중식</span></div>
         <div class="sched-row"><span class="sched-time">13:00–14:00</span><span class="sched-dot practice"></span><span class="sched-content-text">세일즈 실습 (사례별 시나리오)</span><span class="sched-instructor">이지은</span></div>
-        <div class="sched-row"><span class="sched-time">14:00–15:30</span><span class="sched-dot practice"></span><span class="sched-content-text">리마인드 QUIZ SHOW</span><span class="sched-instructor">이지은·박세미</span></div>
-        <div class="sched-row"><span class="sched-time">15:30–17:00</span><span class="sched-dot neutral"></span><span class="sched-content-text">필기 TEST / SURVEY 및 교육 마무리</span><span class="sched-instructor">이지은·박세미</span></div>
+        <div class="sched-row"><span class="sched-time">14:00–15:30</span><span class="sched-dot practice"></span><span class="sched-content-text">음료/베이커리/상품 판매 Role-playing</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row"><span class="sched-time">15:30–17:00</span><span class="sched-dot practice"></span><span class="sched-content-text">필기 TEST / Operation 실습평가</span><span class="sched-instructor">이지은·박세미</span></div>
+        <div class="sched-row"><span class="sched-time">17:00–18:00</span><span class="sched-dot neutral"></span><span class="sched-content-text">교육 마무리 (교육 설문 조사 · 기념 선물 증정)</span></div>
+      </div>
+
+      <!-- 2조 -->
+      <div class="sched-card" id="sched3-2" style="display:none;">
+        <div class="sched-row"><span class="sched-time">09:00–09:15</span><span class="sched-dot theory"></span><span class="sched-content-text">드립백 시음</span></div>
+        <div class="sched-row"><span class="sched-time">09:15–10:30</span><span class="sched-dot practice"></span><span class="sched-content-text">농장 소개 및 시음</span><span class="sched-instructor">박세미</span></div>
+        <div class="sched-row"><span class="sched-time">10:30–12:00</span><span class="sched-dot theory"></span><span class="sched-content-text">POS &amp; KIOSK</span><span class="sched-instructor">이지은</span></div>
+        <div class="sched-row lunch"><span class="sched-time">12:00–13:00</span><span class="sched-content-text">중식</span></div>
+        <div class="sched-row"><span class="sched-time">13:00–14:00</span><span class="sched-dot practice"></span><span class="sched-content-text">세일즈 실습 (사례별 시나리오)</span><span class="sched-instructor">박세미</span></div>
+        <div class="sched-row"><span class="sched-time">14:00–15:30</span><span class="sched-dot practice"></span><span class="sched-content-text">음료/베이커리/상품 판매 Role-playing</span><span class="sched-instructor">박세미</span></div>
+        <div class="sched-row"><span class="sched-time">15:30–17:00</span><span class="sched-dot practice"></span><span class="sched-content-text">필기 TEST / Operation 실습평가</span><span class="sched-instructor">이지은·박세미</span></div>
+        <div class="sched-row"><span class="sched-time">17:00–18:00</span><span class="sched-dot neutral"></span><span class="sched-content-text">교육 마무리 (교육 설문 조사 · 기념 선물 증정)</span></div>
       </div>
     </div>
 
@@ -159,7 +183,7 @@
       <div class="sec-head-ko">교육 이수</div>
     </div>
     <div id="coursesNameGate" style="display:none;">
-      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 이름을 입력해주세요.</div>
+      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 성을 포함한 이름을 띄어쓰기 없이 입력해주세요.</div>
     </div>
     <div id="coursesList"></div>
   </section>
@@ -285,19 +309,19 @@
         </div>
         <div class="q-block">
           <div class="q-num">Q8</div>
-          <div class="q-text">에티오피아 리무 아가로 토착종 워시드 커피의 테이스팅 노트를 작성하시오.</div>
+          <div class="q-text">에티오피아 시다마 하마쇼 토착종 워시드 커피의 테이스팅 노트를 작성하시오.</div>
           <div class="q-inputs">
             <div class="ans-row"><span class="ans-label">①</span><textarea class="ans-textarea" placeholder="답을 입력하세요" data-q="8" data-a="1"></textarea></div>
           </div>
         </div>
         <div class="q-block">
           <div class="q-num">Q9</div>
-          <div class="q-text">보름달 블렌드 커피의 알맞은 원산지 배합을 보기 중 고르시오.</div>
+          <div class="q-text">안녕,새 해 블렌드 커피의 알맞은 원산지 배합을 보기 중 고르시오.</div>
           <div class="q-options">
-            <label class="opt-label"><input type="radio" name="q9" value="1"/> ① 온두라스 35%+콜롬비아 30%+기타 35%</label>
-            <label class="opt-label"><input type="radio" name="q9" value="2"/> ② 브라질 30%+콜롬비아 30%+기타 40%</label>
-            <label class="opt-label"><input type="radio" name="q9" value="3"/> ③ 콜롬비아 40%+브라질 30%+기타 30%</label>
-            <label class="opt-label"><input type="radio" name="q9" value="4"/> ④ 콜롬비아 35%+온두라스 30%+그 외 35%</label>
+            <label class="opt-label"><input type="radio" name="q9" value="1"/> ① 케냐 35%+과테말라 30%+기타 35%</label>
+            <label class="opt-label"><input type="radio" name="q9" value="2"/> ② 온두라스 30%+콜롬비아 30%+기타 40%</label>
+            <label class="opt-label"><input type="radio" name="q9" value="3"/> ③ 과테말라 35%+케냐 30%+기타 35%</label>
+            <label class="opt-label"><input type="radio" name="q9" value="4"/> ④ 콜롬비아 35%+온두라스 30%+기타 35%</label>
           </div>
         </div>
         <div class="q-block">

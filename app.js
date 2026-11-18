@@ -1,5 +1,5 @@
 // ── 비밀번호 설정 ──
-const ACCESS_CODE = '1020'; // ← 원하는 코드로 변경
+const ACCESS_CODE = '1201'; // ← 원하는 코드로 변경
 
 function checkPassword() {
   const input = document.getElementById('pwInput').value.trim();
@@ -59,6 +59,44 @@ async function postToSheet(data) {
   }
 }
 
+// ══════════════════════════════════════════════════
+// ★ 조 편성 명단 ★
+// 조를 나누는 기수에만 members에 이름을 넣으세요.
+//  · 이름은 쉼표로 구분, 띄어쓰기는 있어도 인식됩니다.
+//  · 명단에 없거나 두 조에 같은 이름이 있으면(동명이인)
+//    신입이 일정 탭에서 조를 직접 선택합니다.
+//  · 두 조 모두 비워두면 조 구분 없이 3일차 일정이 그대로 표시됩니다.
+//  · date는 조별 3일차 교육 날짜입니다.
+// ══════════════════════════════════════════════════
+const GROUPS = {
+  1: { date: '12/3', members: [
+    // '홍길동', '김철수', '이지은',
+  ] },
+  2: { date: '12/4', members: [
+    // '이영희', '박민수', '박세미', 
+  ] }
+};
+// 명단이 하나라도 있으면 조 분리 모드
+const SPLIT_MODE = GROUPS[1].members.length + GROUPS[2].members.length > 0;
+// ══════════════════════════════════════════════════
+
+function normalizeName(n) { return String(n || '').replace(/\s+/g, ''); }
+
+// 이름 → 조 (두 조에 중복된 이름은 0으로 표시하여 직접 선택하게 함)
+const NAME_TO_GROUP = (() => {
+  const map = {};
+  [1, 2].forEach(g => {
+    GROUPS[g].members.forEach(raw => {
+      const key = normalizeName(raw);
+      if (!key) return;
+      map[key] = (map[key] && map[key] !== g) ? 0 : g;
+    });
+  });
+  return map;
+})();
+
+function lookupGroup(name) { return NAME_TO_GROUP[normalizeName(name)] || 0; }
+
 // ── 교육 데이터 ──
 const COURSES = [
   {
@@ -112,7 +150,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:00–10:30', instructor: '이지은',
+    id: 'service_basic', name: '서비스 교육 Basic', day: 'Day 2', time: '09:15–10:30', instructor: '이지은',
     desc: '테라로사 서비스의 기본 원칙과 고객 응대 매너를 배웁니다.',
     quiz: [{
       q: '고객 안내 시 "실례지만", "번거롭겠지만"과 같이 완충하는 표현 방법을 무엇이라 하나요?',
@@ -132,17 +170,7 @@ const COURSES = [
     }]
   },
   {
-    id: 'farm', name: '커피 산지 소개', day: 'Day 2', time: '14:00–15:00', instructor: '박세미',
-    desc: '테라로사가 함께하는 주요 커피 산지와 원산지별 특징에 대한 이해를 높입니다.',
-    quiz: [{
-      q: '에티오피아 커피의 대표적인 특징으로 맞는 것은?',
-      options: ['견과류와 초콜릿 향이 강하다', '꽃향기와 과일 향이 특징적이다', '스모키하고 무거운 바디감이 있다', '단맛이 없고 드라이한 편이다'],
-      answer: 1,
-      explanation: '에티오피아는 커피의 발원지로, 특히 워시드 가공에서 재스민·베르가못 같은 꽃향기와 복숭아·레몬 같은 과일 향이 특징적으로 나타납니다.'
-    }]
-  },
-  {
-    id: 'coffee_products', name: '커피 상품 교육', day: 'Day 2', time: '15:30–17:00', instructor: '이지은',
+    id: 'coffee_products', name: '커피 상품 교육', day: 'Day 2', time: '13:30–15:00', instructor: '이지은',
     desc: '원두, 드립백 등 테라로사 커피 상품의 종류, 특징, 기한 및 세일즈 포인트를 배웁니다.',
     quiz: [{
       q: "'킹콩'의 이름은 어떤 의미인가요?",
@@ -152,13 +180,23 @@ const COURSES = [
     }]
   },
   {
-    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 3', time: '09:00–10:30', instructor: '이지은',
+    id: 'food_goods', name: '푸드/굿즈 상품 교육', day: 'Day 2', time: '15:00–16:30', instructor: '이지은',
     desc: '베이커리, 푸드 상품, 굿즈 라인업 전반을 이해하고 고객에게 소개하는 방법을 배웁니다.',
     quiz: [{
       q: '테라로사에서 판매하는 텀블러를 제조하는 회사 이름은 무엇일까요?',
       options: ['미르(Myre)', '미르(Mirr)', '미르(Myrr)', '미르(Miir)'],
       answer: 3,
       explanation: '테라로사는 미국의 미르(Miir)라는 브랜드의 텀블러를 판매하고 있습니다.'
+    }]
+  },
+  {
+    id: 'farm', name: '농장 소개 및 시음', day: 'Day 3', time: '09:15–10:30', instructor: '박세미',
+    desc: '테라로사가 함께하는 주요 커피 산지와 원산지별 특징을 알아보고 직접 시음합니다.',
+    quiz: [{
+      q: '에티오피아 커피의 대표적인 특징으로 맞는 것은?',
+      options: ['견과류와 초콜릿 향이 강하다', '꽃향기와 과일 향이 특징적이다', '스모키하고 무거운 바디감이 있다', '단맛이 없고 드라이한 편이다'],
+      answer: 1,
+      explanation: '에티오피아는 커피의 발원지로, 특히 워시드 가공에서 재스민·베르가못 같은 꽃향기와 복숭아·레몬 같은 과일 향이 특징적으로 나타납니다.'
     }]
   },
   {
@@ -175,6 +213,8 @@ const COURSES = [
 
 // ── 상태 ──
 let userName = '';
+let userGroup = 0;      // 0: 미정, 1: 1조, 2: 2조
+let groupAuto = false;  // 명단으로 자동 매칭된 경우 true
 let completions = {};
 let currentQuizIdx = null;
 let quizSubmitted = false;
@@ -189,18 +229,21 @@ window.addEventListener('DOMContentLoaded', () => {
       const data = JSON.parse(saved);
       userName = data.name || '';
       completions = data.completions || {};
+      userGroup = data.group || 0;
       testSubmitted = data.testSubmitted || false; 
       surveySubmitted = data.surveySubmitted || false; 
       if (userName) activateUser();
     } catch(e) {}
   }
   renderCourses();
+  renderGroupSchedule();
   updateProgressUI();
 });
 
 function saveLocal() {
   localStorage.setItem('tr_onboarding', JSON.stringify({
     name: userName,
+    group: groupAuto ? 0 : userGroup,
     completions,
     testSubmitted: testSubmitted,
     surveySubmitted: surveySubmitted
@@ -289,7 +332,56 @@ function activateUser() {
   document.getElementById('nameGate').style.display = 'none';
   document.getElementById('welcomeContent').style.display = 'block';
   document.getElementById('welcomeName').textContent = userName;
+  const matched = lookupGroup(userName);
+  if (matched) { userGroup = matched; groupAuto = true; }
+  else { groupAuto = false; }
+  renderGroupSchedule();
   updateProgressUI();
+}
+
+// ── 3일차 조별 일정 ──
+function selectGroup(g) {
+  userGroup = g;
+  groupAuto = false; // 직접 고른 값 (다음 접속 때 명단과 일치하면 자동 값이 우선)
+  saveLocal();
+  renderGroupSchedule();
+}
+
+function renderGroupSchedule() {
+  const effective = SPLIT_MODE ? userGroup : 1;
+
+  document.querySelectorAll('[data-group-date]').forEach(el => {
+    el.textContent = GROUPS[el.dataset.groupDate].date;
+  });
+  const sw = document.getElementById('groupSwitch');
+  if (sw) sw.style.display = SPLIT_MODE ? 'inline-flex' : 'none';
+
+  [1, 2].forEach(g => {
+    const card = document.getElementById('sched3-' + g);
+    if (card) card.style.display = effective === g ? 'block' : 'none';
+    const btn = document.querySelector('.group-btn[data-group="' + g + '"]');
+    if (btn) btn.classList.toggle('active', effective === g);
+  });
+
+  const note = document.getElementById('groupNote');
+  if (!note) return;
+  note.classList.remove('empty');
+  if (!SPLIT_MODE) {
+    note.style.display = 'none';
+    return;
+  }
+  note.style.display = 'block';
+  if (effective && groupAuto) {
+    note.textContent = userName + '님은 ' + effective + '조입니다. 3일차 교육은 ' + GROUPS[effective].date + '에 진행돼요. 조가 다르다면 위 버튼으로 바꿔볼 수 있어요.';
+  } else if (effective) {
+    note.textContent = '직접 선택한 조입니다. 안내받은 조가 맞는지 확인해주세요. 3일차 교육은 ' + GROUPS[effective].date + '에 진행돼요.';
+  } else if (userName) {
+    note.classList.add('empty');
+    note.textContent = '이름이 조 명단에서 확인되지 않았어요. 위에서 소속 조를 선택하면 3일차 일정이 보여요.';
+  } else {
+    note.classList.add('empty');
+    note.textContent = '환영합니다 탭에서 이름을 입력하면 소속 조가 자동으로 표시돼요. 위 버튼으로 직접 선택해도 됩니다.';
+  }
 }
 
 // ── 진행률 ──
