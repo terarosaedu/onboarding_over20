@@ -72,6 +72,10 @@ const GROUPS = {
   1: { date: '12/3', members: ['홍길동', '김철수', '이지은'] },
   2: { date: '12/4', members: ['이영희', '박민수', '박세미'] }
 };
+// 일정 탭에 표시되는 1일차·2일차 날짜 (비워두면 표시되지 않음)
+// 3일차 날짜는 위 GROUPS의 date를 사용합니다. 조를 나누지 않는 기수는 1조 날짜가 표시됩니다.
+const TRAINING_DATES = { day1: '12/1', day2: '12/2' };
+
 // 명단이 하나라도 있으면 조 분리 모드
 const SPLIT_MODE = GROUPS[1].members.length + GROUPS[2].members.length > 0;
 // ══════════════════════════════════════════════════
@@ -233,6 +237,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   renderCourses();
   renderGroupSchedule();
+  updateNavLock();
   updateProgressUI();
 });
 
@@ -248,11 +253,20 @@ function saveLocal() {
 
 // ── 섹션 전환 ──
 function showSection(id, el) {
+  // 이름 입력 전에는 환영 탭만 열림
+  let blocked = false;
+  if (id !== 'welcome' && !userName) {
+    blocked = true;
+    id = 'welcome';
+    el = document.querySelector('.nav-item[data-section="welcome"]');
+    alert('먼저 이름을 입력해주세요.');
+  }
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   document.getElementById('sec-' + id).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   if (el) el.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (blocked) { const inp = document.getElementById('nameInput'); if (inp) inp.focus(); }
 
   if (id === 'courses') {
     if (!userName) {
@@ -267,6 +281,7 @@ function showSection(id, el) {
 
 // ── 필기TEST / 설문 탭 클릭 시 잠금 체크 ──
 function tryOpenFinal(id, el) {
+  if (!userName) { showSection(id, el); return; } // 이름 미입력 시 환영 탭으로 안내
   const done = Object.keys(completions).length;
   const total = COURSES.length;
 
@@ -331,6 +346,7 @@ function activateUser() {
   const matched = lookupGroup(userName);
   if (matched) { userGroup = matched; groupAuto = true; }
   else { groupAuto = false; }
+  updateNavLock();
   renderGroupSchedule();
   updateProgressUI();
 }
@@ -343,8 +359,22 @@ function selectGroup(g) {
   renderGroupSchedule();
 }
 
+// 이름 입력 전에는 환영 탭 외 탭을 잠금 표시
+function updateNavLock() {
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.dataset.section === 'welcome') return;
+    n.classList.toggle('locked', !userName);
+  });
+}
+
 function renderGroupSchedule() {
   const effective = SPLIT_MODE ? userGroup : 1;
+
+  // 일차별 날짜 표시
+  const setDate = (key, val) => document.querySelectorAll('[data-day-date="' + key + '"]').forEach(el => { el.textContent = val || ''; });
+  setDate('day1', TRAINING_DATES.day1);
+  setDate('day2', TRAINING_DATES.day2);
+  setDate('day3', effective ? GROUPS[effective].date : '');
 
   document.querySelectorAll('[data-group-date]').forEach(el => {
     el.textContent = GROUPS[el.dataset.groupDate].date;

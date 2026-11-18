@@ -95,7 +95,7 @@
           <div class="ws-item"><div class="ws-num">STEP 02</div><div class="ws-text">교육 이수</div></div>
           <div class="ws-item"><div class="ws-num">STEP 03</div><div class="ws-text">최종 평가</div></div>
         </div>
-        <button class="btn-primary" onclick="showSection('courses', document.querySelector('[data-section=courses]'))">교육 이수 시작하기 →</button>
+        <button class="btn-primary" onclick="showSection('schedule', document.querySelector('[data-section=schedule]'))">일정 확인하기 →</button>
       </div>
     </div>
   </section>
@@ -108,7 +108,7 @@
     </div>
 
     <div class="day-group fade-up d1">
-      <div class="day-label">Day 1</div>
+      <div class="day-label">Day 1<span class="day-date" data-day-date="day1"></span></div>
       <div class="sched-card">
         <div class="sched-row"><span class="sched-time">09:00–09:30</span><span class="sched-dot neutral"></span><span class="sched-content-text">아이스 브레이킹</span></div>
         <div class="sched-row"><span class="sched-time">09:30–10:30</span><span class="sched-dot theory"></span><span class="sched-content-text">회사소개</span><span class="sched-instructor">채선주</span></div>
@@ -122,7 +122,7 @@
     </div>
 
     <div class="day-group fade-up d2">
-      <div class="day-label d2">Day 2</div>
+      <div class="day-label d2">Day 2<span class="day-date" data-day-date="day2"></span></div>
       <div class="sched-card">
         <div class="sched-row"><span class="sched-time">09:00–09:15</span><span class="sched-dot theory"></span><span class="sched-content-text">Tea 3종 시음</span></div>
         <div class="sched-row"><span class="sched-time">09:15–10:30</span><span class="sched-dot theory"></span><span class="sched-content-text">서비스 교육 Basic</span><span class="sched-instructor">이지은</span></div>
@@ -137,7 +137,7 @@
 
     <div class="day-group fade-up d3">
       <div class="day-head">
-        <div class="day-label d3">Day 3</div>
+        <div class="day-label d3">Day 3<span class="day-date" data-day-date="day3"></span></div>
         <div class="group-switch" id="groupSwitch">
           <button class="group-btn" data-group="1" onclick="selectGroup(1)">1조<span class="gb-date" data-group-date="1"></span></button>
           <button class="group-btn" data-group="2" onclick="selectGroup(2)">2조<span class="gb-date" data-group-date="2"></span></button>
@@ -183,7 +183,7 @@
       <div class="sec-head-ko">교육 이수</div>
     </div>
     <div id="coursesNameGate" style="display:none;">
-      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 성을 포함한 이름을 띄어쓰기 없이 입력해주세요.</div>
+      <div class="info-box">먼저 <strong>환영합니다</strong> 탭에서 이름을 입력해주세요.</div>
     </div>
     <div id="coursesList"></div>
   </section>

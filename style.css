@@ -88,7 +88,7 @@ body {
   background: var(--red);
   border-radius: 0 0 2px 2px;
 }
-.nav-item.locked { opacity: 0.4; }
+.nav-item.locked { opacity: 0.4; cursor: not-allowed; }
 
 /* ── FLOATING PROGRESS ── */
 .progress-float {
@@ -381,6 +381,10 @@ body {
   font-size: 11px; color: var(--gray-600);
 }
 .leg-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* 일정 날짜 표시 */
+.day-date { font-size: 11px; letter-spacing: 0.5px; }
+.day-date:not(:empty)::before { content: '·'; margin: 0 8px; opacity: 0.6; }
 
 /* ── DAY3 조 선택 ── */
 .day-head {
