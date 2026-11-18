@@ -69,12 +69,8 @@ async function postToSheet(data) {
 //  · date는 조별 3일차 교육 날짜입니다.
 // ══════════════════════════════════════════════════
 const GROUPS = {
-  1: { date: '12/3', members: [
-    // '홍길동', '김철수', '이지은',
-  ] },
-  2: { date: '12/4', members: [
-    // '이영희', '박민수', '박세미', 
-  ] }
+  1: { date: '12/3', members: ['홍길동', '김철수', '이지은'] },
+  2: { date: '12/4', members: ['이영희', '박민수', '박세미'] }
 };
 // 명단이 하나라도 있으면 조 분리 모드
 const SPLIT_MODE = GROUPS[1].members.length + GROUPS[2].members.length > 0;
